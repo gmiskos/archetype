@@ -8,8 +8,6 @@ import java.util.Collection;
 import java.util.List;
 
 public class ApplicationUser implements UserDetails {
-    private User user;
-
     private List<? extends GrantedAuthority> grantedAuthorities;
     private String password;
     private String username;
@@ -30,8 +28,8 @@ public class ApplicationUser implements UserDetails {
         this.isEnabled = isEnabled;
     }
 
-    public ApplicationUser(User user) {
-        this.user = user;
+    public ApplicationUser() {
+
     }
 
     @Override
