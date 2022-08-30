@@ -1,16 +1,11 @@
-package com.example.archetype.entities;
+package com.example.archetype.controllers.users;
 
+import com.example.archetype.entities.Role;
 
-import org.hibernate.annotations.Cascade;
-
-import javax.persistence.*;
 import java.util.Collection;
 
-@Entity
-public class User {
+public class UserDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String firstName;
@@ -20,33 +15,7 @@ public class User {
     private String password;
     private boolean enabled;
     private boolean tokenExpired;
-
-
-    public User() {
-
-    }
-
-    public User(Long id, String firstName, String lastName, String email, String username, String password, boolean enabled, boolean tokenExpired, Collection<Role> roles) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.username = username;
-        this.password = password;
-        this.enabled = enabled;
-        this.tokenExpired = tokenExpired;
-        this.roles = roles;
-    }
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "users_roles",
-            joinColumns = @JoinColumn(
-                    name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(
-                    name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles;
-
 
     public Long getId() {
         return id;

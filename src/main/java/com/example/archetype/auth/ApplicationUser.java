@@ -1,7 +1,9 @@
 package com.example.archetype.auth;
 
 import com.example.archetype.entities.User;
+import com.example.archetype.security.ApplicationUserPermission;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;

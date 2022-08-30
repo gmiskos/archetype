@@ -21,7 +21,7 @@ public class Privilege {
         this.name = name;
     }
 
-    @ManyToMany(mappedBy = "privileges")
+    @ManyToMany(mappedBy = "privileges", cascade = CascadeType.ALL)
     private Collection<Role> roles;
 
     public Long getId() {

@@ -1,12 +1,15 @@
 package com.example.archetype.auth;
 
+import com.example.archetype.controllers.users.UserDTO;
 import com.example.archetype.entities.Privilege;
 import com.example.archetype.entities.Role;
 import com.example.archetype.entities.User;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +34,6 @@ public class ApplicationUserService  implements IUserService {
     public ApplicationUser findByUsername(String username) {
         User userDB = getApplicationUsers().stream().filter(user -> user.getUsername().equals(username)).findFirst().get();
         ApplicationUser applicationUser = new ApplicationUser();
-
         applicationUser.setUsername(userDB.getUsername());
         applicationUser.setPassword(userDB.getPassword());
         applicationUser.setAccountNonExpired(userDB.isTokenExpired());
@@ -40,6 +42,13 @@ public class ApplicationUserService  implements IUserService {
         applicationUser.setCredentialsNonExpired(true);
         applicationUser.setGrantedAuthorities((List<? extends GrantedAuthority>) getAuthorities(userDB.getRoles()));
         return applicationUser;
+    }
+
+    @Override
+    public void registerUser(UserDTO userDTO) {
+        User user = new User(userDTO.getId(), userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail(), userDTO.getUsername(), userDTO.getPassword(), userDTO.isEnabled(), userDTO.isTokenExpired(), userDTO.getRoles());
+
+        userRepository.save(user);
     }
 
     private Collection<? extends GrantedAuthority> getAuthorities(
@@ -65,7 +74,7 @@ public class ApplicationUserService  implements IUserService {
     private List<GrantedAuthority> getGrantedAuthorities(List<String> privileges) {
         List<GrantedAuthority> authorities = new ArrayList<>();
         for (String privilege : privileges) {
-            authorities.add(new SimpleGrantedAuthority(privilege));
+            authorities.add(new SimpleGrantedAuthority("ROLE_"+privilege));
         }
         return authorities;
     }

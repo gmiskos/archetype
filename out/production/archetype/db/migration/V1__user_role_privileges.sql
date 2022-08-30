@@ -1,6 +1,6 @@
--- archetype.`userDTO` definition
+-- archetype.`user` definition
 
-CREATE TABLE `userDTO` (
+CREATE TABLE `user` (
     `id` bigint(20) NOT NULL,
     `email` varchar(255) DEFAULT NULL,
     `enabled` bit(1) NOT NULL,
@@ -35,7 +35,7 @@ CREATE TABLE `users_roles` (
     `role_id` bigint(20) NOT NULL,
     KEY `FKt4v0rrweyk393bdgt107vdx0x` (`role_id`),
     KEY `FKgd3iendaoyh04b95ykqise6qh` (`user_id`),
-    CONSTRAINT `FKgd3iendaoyh04b95ykqise6qh` FOREIGN KEY (`user_id`) REFERENCES `userDTO` (`id`),
+    CONSTRAINT `FKgd3iendaoyh04b95ykqise6qh` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
     CONSTRAINT `FKt4v0rrweyk393bdgt107vdx0x` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

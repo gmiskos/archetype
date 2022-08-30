@@ -1,6 +1,5 @@
 package com.example.archetype.controllers.users;
 
-import com.example.archetype.controllers.AbstractController;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -8,8 +7,8 @@ import java.util.Arrays;
 import java.util.List;
 
 @RestController
-@RequestMapping(AbstractController.BASE_URI  + "/students")
-public class StudentManagementController {
+@RequestMapping("management/api/v1/students")
+public class StudentManagementController{
 
     private static final List<Student> STUDENTS = Arrays.asList(
             new Student(1, "James Bond"),
@@ -20,7 +19,7 @@ public class StudentManagementController {
 //    hasRole('ROLE_') hasAnyRole('ROLE_') hasAuthority('permission') hasAnyAuthority('permission')
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'ADMINTRAINEE')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ADMINTRAINEE')")
     public List<Student> getAllStudents() {
         System.out.println("getAllStudents");
         return STUDENTS;
